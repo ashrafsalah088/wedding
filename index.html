@@ -16,7 +16,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@700&family=Cormorant+Garamond:wght@500;600&family=Gulzar&family=Pinyon+Script&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Amiri+Quran&family=Aref+Ruqaa:wght@700&family=Cormorant+Garamond:wght@500;600&family=Gulzar&family=Pinyon+Script&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="assets/door.jpg" />
   <link rel="preload" as="image" href="assets/wreath.jpg" />
 
@@ -136,8 +136,10 @@
 
     /* ---------- الآية ---------- */
     .verse-box { left: 27%; right: 28%; top: 24.5%; height: 46%; }
-    .ayah { margin: 0; font-family: var(--body); font-size: 5.1em; line-height: 1.9; }
-    .ayah-ref { margin: 0.5em 0 0; font-family: var(--body); font-style: italic; font-size: 3.3em; color: var(--gold); }
+    .verse-box { font-family: "Amiri Quran", var(--body); }
+    .basmala { margin: 0 0 0.2em; font-size: 4.5em; line-height: 2; color: var(--gold); white-space: nowrap; }
+    .ayah { margin: 0; font-size: 4.5em; line-height: 2.05; }
+    .sadaqa { margin: 0.2em 0 0; font-size: 4em; line-height: 2; color: var(--gold); }
 
     /* ---------- الدعوة ---------- */
     .card-box { left: 18.5%; right: 17.5%; top: 23%; height: 50%; }
@@ -307,8 +309,9 @@
       <!-- ١: الآية الكريمة -->
       <section class="slide" style="--img:url('assets/wreath.jpg')">
         <div class="box verse-box">
-          <p class="ayah line" style="--i:1">﴿ وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ ﴾</p>
-          <p class="ayah-ref line" style="--i:3">سورة الروم · الآية ٢١</p>
+          <p class="basmala line" style="--i:1">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+          <p class="ayah line" style="--i:2.5">﴿&nbsp;وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ&nbsp;﴾</p>
+          <p class="sadaqa line" style="--i:5">صَدَقَ اللَّهُ الْعَظِيمُ</p>
         </div>
       </section>
 
