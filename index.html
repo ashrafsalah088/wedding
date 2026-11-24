@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>دعوة زفاف أشرف &amp; F</title>
+  <meta name="description" content="الخميس ٣١ ديسمبر ٢٠٢٦، قاعة فيرونا بالمنصورة" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="دعوة زفاف أشرف &amp; F" />
+  <meta property="og:description" content="الخميس ٣١ ديسمبر ٢٠٢٦، قاعة فيرونا بالمنصورة" />
+  <meta property="og:url" content="https://ashrafsalah088.github.io/wedding/" />
+  <meta property="og:image" content="https://ashrafsalah088.github.io/wedding/assets/preview.jpg" />
+  <meta property="og:image:width" content="600" />
+  <meta property="og:image:height" content="600" />
+  <meta name="theme-color" content="#3b2a3f" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Markazi+Text:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="assets/door-closed.jpg" />
+
+  <style>
+    :root {
+      --ratio: 0.55814;            /* عرض الصورة ÷ ارتفاعها (1536 × 2752) */
+      --plum: #4a1f3d;
+      --gold: #a8823a;
+      --cream: #fbf1dc;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      background: #2c2030;
+      font-family: "Markazi Text", "Amiri", serif;
+      -webkit-text-size-adjust: 100%;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* ================= البوابة ================= */
+    #gate {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      overflow: hidden;
+      cursor: pointer;
+      background: #2c2030;
+      transition: opacity 0.9s ease, visibility 0s linear 0.9s;
+    }
+
+    #gate:focus { outline: none; }
+
+    .door {                        /* الصورة بتملا الشاشة والباب في النص */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: max(100vw, calc(100vh * var(--ratio)));
+      width: max(100vw, calc(100dvh * var(--ratio)));
+      aspect-ratio: 1536 / 2752;
+      transform: translate(-50%, -50%);
+      transform-origin: 50% 54%;
+      transition: transform 2.6s cubic-bezier(0.5, 0, 0.3, 1);
+    }
+
+    .door img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .door .open-img { opacity: 0; transition: opacity 1.1s ease; }
+
+    .gate-title {
+      position: absolute;
+      top: 44%;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: var(--cream);
+      font-family: "Aref Ruqaa", serif;
+      text-shadow: 0 2px 10px rgba(20, 5, 20, 0.95), 0 0 30px rgba(20, 5, 20, 0.8);
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .gate-title b { display: block; font-size: clamp(2.6rem, 13vw, 4rem); line-height: 1.3; }
+    .gate-title span { display: block; font-size: clamp(1.4rem, 6.5vw, 2rem); }
+
+    .gate-hint, .tap-hint {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0;
+      padding: 5px 20px 7px;
+      border-radius: 999px;
+      background: rgba(255, 250, 245, 0.88);
+      color: var(--plum);
+      font-size: 1.3rem;
+      white-space: nowrap;
+      animation: breathe 2.4s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .gate-hint { bottom: max(7vh, 40px); transition: opacity 0.4s ease; }
+
+    @keyframes breathe { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+
+    .flash {                       /* النور الأبيض اللي بيملا الشاشة */
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 52%, #fff 0%, #fff 35%, rgba(255, 244, 250, 0.95) 70%, rgba(255, 236, 246, 0.9) 100%);
+      opacity: 0;
+      transition: opacity 1.1s ease-in;
+      pointer-events: none;
+    }
+
+    #gate.open .open-img { opacity: 1; }
+    #gate.open .door { transform: translate(-50%, -50%) scale(2.3); }
+    #gate.open .gate-title, #gate.open .gate-hint { opacity: 0; animation: none; }
+    #gate.flashing .flash { opacity: 1; }
+    #gate.done { opacity: 0; visibility: hidden; pointer-events: none; }
+
+    /* ================= الصفحات ================= */
+    #slides { position: fixed; inset: 0; z-index: 10; cursor: pointer; }
+    #slides:focus { outline: none; }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.8s ease, visibility 0s linear 0.8s;
+    }
+
+    .slide.on { opacity: 1; visibility: visible; transition: opacity 0.8s ease, visibility 0s; }
+
+    .slide::before {               /* نفس الصورة مغبّشة تملا الفراغ فوق وتحت في الموبايلات الطويلة */
+      content: "";
+      position: absolute;
+      inset: -40px;
+      background: var(--img) center / cover no-repeat;
+      filter: blur(22px);
+    }
+
+    .stage {                       /* الصورة كاملة، وكل اللي فوقها متحدد بنسبة منها */
+      position: relative;
+      width: min(100vw, calc(100vh * var(--ratio)));
+      width: min(100vw, calc(100dvh * var(--ratio)));
+      aspect-ratio: 1536 / 2752;
+      background: var(--img) center / 100% 100% no-repeat;
+      font-size: calc(var(--u, 3.9px) * 1);
+      -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+      mask-image: linear-gradient(180deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+      transform: scale(1.04);
+      transition: transform 1.4s ease;
+    }
+
+    .slide.on .stage { transform: none; }
+
+    /* الآية */
+    .ayah-box {
+      position: absolute;
+      left: 19.5%;
+      right: 16%;
+      top: 34.5%;
+      height: 49.5%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--plum);
+    }
+
+    .ayah { margin: 0; font-family: "Amiri", serif; font-size: 7.4em; line-height: 2; }
+    .ayah-ref { margin: 0.8em 0 0; font-size: 4em; color: var(--gold); font-family: "Amiri", serif; }
+
+    /* العداد */
+    .num {
+      position: absolute;
+      top: 51%;
+      width: 11.5%;
+      height: 5.74%;
+      margin-left: -5.75%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Aref Ruqaa", serif;
+      font-weight: 700;
+      font-size: 11.5em;
+      line-height: 1;
+      color: var(--gold);
+      text-shadow: 0 0.04em 0.06em rgba(90, 60, 10, 0.35);
+      font-variant-numeric: tabular-nums;
+      direction: ltr;
+    }
+
+    #c-s { left: 22.9%; }
+    #c-m { left: 40.9%; }
+    #c-h { left: 58.7%; }
+    #c-d { left: 76.6%; }
+
+    /* زرار الخريطة (منطقة شفافة فوق الزرار المرسوم في الصورة) */
+    .map-link { position: absolute; left: 24%; right: 24%; top: 48.5%; height: 26%; border-radius: 8em; }
+    .map-link:focus-visible { outline: 3px solid var(--gold); }
+
+    /* التنقل */
+    .tap-hint { bottom: max(2.2vh, 14px); z-index: 12; font-size: 1.15rem; transition: opacity 0.4s ease; }
+    .tap-hint.off { opacity: 0; animation: none; }
+
+    .dots { position: absolute; top: max(1.6vh, 10px); left: 0; right: 0; z-index: 12; display: flex; justify-content: center; gap: 7px; direction: rtl; pointer-events: none; }
+    .dots i { width: 22px; height: 4px; border-radius: 4px; background: rgba(255, 255, 255, 0.5); transition: background 0.4s ease; }
+    .dots i.on { background: #fff; }
+
+    .replay {
+      position: absolute;
+      bottom: max(2.2vh, 14px);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 12;
+      padding: 5px 20px 7px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255, 250, 245, 0.88);
+      color: var(--plum);
+      font-family: inherit;
+      font-size: 1.15rem;
+      cursor: pointer;
+    }
+
+    .replay[hidden] { display: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .door, .stage { transition-duration: 0.01s; }
+      .gate-hint, .tap-hint { animation: none; opacity: 1; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============ البوابة ============ -->
+  <div id="gate" role="button" tabindex="0" aria-label="افتح الدعوة">
+    <div class="door">
+      <img src="assets/door-closed.jpg" alt="" />
+      <img class="open-img" src="assets/door-open.jpg" alt="" />
+    </div>
+    <div class="gate-title"><b>دعوة زفاف</b><span>أشرف &amp; F</span></div>
+    <p class="gate-hint">اضغط على الباب لفتح الدعوة</p>
+    <div class="flash"></div>
+  </div>
+
+  <!-- ============ الصفحات ============ -->
+  <div id="slides" tabindex="-1">
+
+    <section class="slide" style="--img:url('assets/verse.jpg')" aria-label="الآية الكريمة">
+      <div class="stage">
+        <div class="ayah-box">
+          <p class="ayah">﴿ وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ ﴾</p>
+          <p class="ayah-ref">سورة الروم · الآية ٢١</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" style="--img:url('assets/invitation.jpg')" aria-label="تتشرف عائلة الأستاذ صلاح سليمان وعائلة الأستاذ صفوت ربيع بدعوة سيادتكم لحضور حفل زفاف أشرف و F">
+      <div class="stage"></div>
+    </section>
+
+    <section class="slide" style="--img:url('assets/timer.jpg')" aria-label="باقي على فرحنا، يوم الخميس ٣١ ديسمبر ٢٠٢٦">
+      <div class="stage">
+        <span class="num" id="c-d">٠٠</span>
+        <span class="num" id="c-h">٠٠</span>
+        <span class="num" id="c-m">٠٠</span>
+        <span class="num" id="c-s">٠٠</span>
+      </div>
+    </section>
+
+    <section class="slide" style="--img:url('assets/location.jpg')" aria-label="مكان الحفل: قاعة فيرونا، المنصورة، طلخا، كورنيش النيل، قبل محكمة طلخا">
+      <div class="stage">
+        <a class="map-link" id="map" href="https://maps.app.goo.gl/gSLxBwcEHKD6vbUy9" target="_blank" rel="noopener noreferrer" aria-label="افتح الخريطة"></a>
+      </div>
+    </section>
+
+    <div class="dots" id="dots"><i></i><i></i><i></i><i></i></div>
+    <p class="tap-hint off" id="tap-hint">اضغط للمتابعة</p>
+    <button type="button" class="replay" id="replay" hidden>من الأول</button>
+  </div>
+
+  <script>
+    (function () {
+      /* ميعاد الفرح: الخميس ٣١ ديسمبر ٢٠٢٦ الساعة ٧:٠٠ مساءً بتوقيت مصر (= ١٧:٠٠ بالتوقيت العالمي) */
+      var WEDDING = Date.UTC(2026, 11, 31, 17, 0, 0);
+
+      var gate = document.getElementById('gate');
+      var wrap = document.getElementById('slides');
+      var slides = [].slice.call(document.querySelectorAll('.slide'));
+      var dots = [].slice.call(document.querySelectorAll('#dots i'));
+      var hint = document.getElementById('tap-hint');
+      var replay = document.getElementById('replay');
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var current = -1, opened = false, locked = true, timers = [];
+
+      /* مقاس الخط بيتحسب من عرض الصورة عشان الكلام يفضل في مكانه على أي موبايل */
+      function fit() {
+        var w = document.querySelector('.stage').getBoundingClientRect().width / 1.04 || window.innerWidth;
+        if (slides.some(function (s) { return s.classList.contains('on'); })) w = document.querySelector('.slide.on .stage').offsetWidth;
+        document.documentElement.style.setProperty('--u', (w / 100) + 'px');
+      }
+      window.addEventListener('resize', fit);
+      fit();
+
+      /* تحميل الصور بدري عشان التنقل يبقى سلس */
+      ['door-open', 'verse', 'invitation', 'timer', 'location'].forEach(function (n) {
+        var i = new Image(); i.src = 'assets/' + n + '.jpg';
+      });
+
+      function show(n) {
+        if (n < 0 || n >= slides.length) return;
+        current = n;
+        slides.forEach(function (s, k) { s.classList.toggle('on', k === n); });
+        dots.forEach(function (d, k) { d.classList.toggle('on', k <= n); });
+        var last = n === slides.length - 1;
+        hint.classList.toggle('off', last);
+        replay.hidden = !last;
+        fit();
+      }
+
+      function openGate() {
+        if (opened) return;
+        opened = true;
+        gate.classList.add('open');
+        timers.push(setTimeout(function () { gate.classList.add('flashing'); }, reduced ? 0 : 1300));
+        timers.push(setTimeout(function () {
+          show(0);
+          gate.classList.add('done');
+          wrap.focus({ preventScroll: true });
+        }, reduced ? 100 : 2500));
+        timers.push(setTimeout(function () { locked = false; }, reduced ? 300 : 3300));
+      }
+
+      function restart() {
+        timers.forEach(clearTimeout); timers = [];
+        locked = true; opened = false; current = -1;
+        gate.classList.remove('done', 'flashing', 'open');
+        setTimeout(function () { slides.forEach(function (s) { s.classList.remove('on'); }); }, 900);
+        gate.focus({ preventScroll: true });
+      }
+
+      function next() { if (!locked) show(current + 1); }
+      function prev() { if (!locked) show(current - 1); }
+
+      gate.addEventListener('click', openGate);
+      gate.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openGate(); }
+      });
+
+      /* الضغط = الصفحة اللي بعدها، والسحب لفوق/لتحت أو يمين/شمال = بعدها/قبلها */
+      var sx = 0, sy = 0, swiped = false;
+      function start(e) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; swiped = false; }
+      wrap.addEventListener('touchstart', start, { passive: true });
+      gate.addEventListener('touchstart', start, { passive: true });
+      gate.addEventListener('touchmove', function (e) {
+        if (Math.abs(e.touches[0].clientY - sy) > 30) openGate();
+      }, { passive: true });
+      wrap.addEventListener('touchend', function (e) {
+        var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+        if (Math.max(Math.abs(dx), Math.abs(dy)) < 40) return;
+        swiped = true;
+        if (Math.abs(dy) > Math.abs(dx)) { dy < 0 ? next() : prev(); }
+        else { dx > 0 ? next() : prev(); }       /* الصفحات عربي: السحب لليمين يجيب اللي بعدها */
+      }, { passive: true });
+      wrap.addEventListener('click', function (e) {
+        if (swiped) { swiped = false; return; }
+        if (e.target.closest('a, button')) return;
+        next();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (!opened) return;
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowDown' || e.key === 'PageDown') next();
+        if (e.key === 'ArrowRight' || e.key === 'ArrowUp' || e.key === 'PageUp') prev();
+      });
+      replay.addEventListener('click', restart);
+
+      /* العداد */
+      function two(n) { return n.toLocaleString('ar-EG', { minimumIntegerDigits: 2, useGrouping: false }); }
+      function tick() {
+        var s = Math.max(0, Math.floor((WEDDING - Date.now()) / 1000));
+        document.getElementById('c-d').textContent = two(Math.floor(s / 86400));
+        document.getElementById('c-h').textContent = two(Math.floor(s % 86400 / 3600));
+        document.getElementById('c-m').textContent = two(Math.floor(s % 3600 / 60));
+        document.getElementById('c-s').textContent = two(s % 60);
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
+  </script>
+</body>
+</html>
