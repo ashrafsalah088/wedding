@@ -439,6 +439,7 @@
         slides.forEach(function (s, k) { s.classList.toggle('on', k === n); });
         clearTimeout(auto);
         if (STAY[n]) auto = setTimeout(function () { show(n + 1); }, STAY[n] * 1000);
+        syncMusic();
       }
 
       function openDoor() {
@@ -446,28 +447,48 @@
         opened = true;
         show(0);
         app.classList.add('open');
-        playMusic();
+        primeMusic();
         /* قفل قصير بس عشان الضغطة المزدوجة على الباب ما تعدّيش الآية */
         timers.push(setTimeout(function () { locked = false; }, 700));
         timers.push(setTimeout(function () { app.classList.add('gone'); }, 3300));
       }
 
-      /* الموسيقى: بتبدأ مع فتح الباب (المتصفحات بتمنع الصوت قبل أول ضغطة) */
+      /* الموسيقى: ساكتة تماماً في صفحة الآية، وبتبدأ من أول صفحة الدعوة.
+         المتصفحات (خصوصاً الآيفون) بتمنع الصوت إلا من جوه ضغطة، فبنجهّز الملف وهو مكتوم
+         وقت ضغطة الباب، وبعدها نقدر نشغّله لوحده لما الآية تخلص */
       var music = document.getElementById('music');
       var soundBtn = document.getElementById('sound');
       music.volume = 0.85;
+      function musicAllowed() { return opened && current >= 1 && !soundBtn.classList.contains('muted'); }
+      function primeMusic() {
+        music.muted = true;
+        var p = music.play();
+        var settle = function () {
+          if (musicAllowed()) { music.muted = false; return; }
+          music.pause();
+          music.currentTime = 0;
+          music.muted = false;
+        };
+        if (p && p.then) p.then(settle, function () { music.muted = false; });
+        else settle();
+      }
       function playMusic() {
+        music.muted = false;
         var p = music.play();
         if (p && p.catch) p.catch(function () { soundBtn.classList.add('muted'); });
       }
+      function syncMusic() {
+        if (musicAllowed()) { if (music.paused || music.muted) playMusic(); }
+        else if (!music.muted) music.pause();
+      }
       soundBtn.addEventListener('click', function (e) {
         e.stopPropagation();
-        if (music.paused) { playMusic(); soundBtn.classList.remove('muted'); }
-        else { music.pause(); soundBtn.classList.add('muted'); }
+        soundBtn.classList.toggle('muted');
+        syncMusic();
       });
       document.addEventListener('visibilitychange', function () {
         if (document.hidden) music.pause();
-        else if (opened && !soundBtn.classList.contains('muted')) playMusic();
+        else syncMusic();
       });
 
       function next() { if (!opened) return openDoor(); if (!locked) show(current + 1); }
