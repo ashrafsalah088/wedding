@@ -19,6 +19,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Amiri+Quran&family=Aref+Ruqaa:wght@700&family=Cormorant+Garamond:wght@500;600&family=Gulzar&family=Noto+Nastaliq+Urdu:wght@700&family=Pinyon+Script&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="assets/door.jpg" />
   <link rel="preload" as="image" href="assets/wreath.jpg" />
+  <link rel="preload" as="font" type="font/woff2" href="assets/UthmanicHafs.woff2" crossorigin />
 
   <style>
     :root {
@@ -136,14 +137,16 @@
 
     /* ---------- الآية ---------- */
     .verse-box { left: 27%; right: 28%; top: 24.5%; height: 46%; }
-    .verse-box { font-family: "Amiri Quran", var(--body); }
+    /* خط مصحف المدينة (حفص) من مجمع الملك فهد، الملف جوه assets */
+    @font-face { font-family: "Uthmanic Hafs"; src: url("assets/UthmanicHafs.woff2") format("woff2"); font-display: block; }
+    .verse-box { font-family: "Uthmanic Hafs", "Amiri Quran", var(--body); }
     .basmala { margin: 0 0 0.2em; font-size: 4.5em; line-height: 2; color: var(--gold); white-space: nowrap; }
     .ayah { margin: 0; font-size: 4.5em; line-height: 2.05; }
     .sadaqa { margin: 0.2em 0 0; font-size: 4em; line-height: 2; color: var(--gold); }
 
     /* الآية بتتكتب كلمة ورا كلمة من اليمين للشمال */
-    .w { display: inline-block; clip-path: inset(-60% 0 -60% 100%); opacity: 0; transition: clip-path 0.34s ease-out, opacity 0.2s ease-out; transition-delay: 0s; }
-    .slide.on .w { clip-path: inset(-60% -12% -60% -12%); opacity: 1; transition-delay: calc(var(--k) * 0.085s + 0.9s); }
+    .w { display: inline-block; clip-path: inset(-60% 0 -60% 100%); opacity: 0; transition: clip-path 0.7s ease-out, opacity 0.45s ease-out; transition-delay: 0s; }
+    .slide.on .w { clip-path: inset(-60% -12% -60% -12%); opacity: 1; transition-delay: calc(var(--k) * 0.17s + 1.2s); }
 
     /* ---------- الدعوة ---------- */
     .card-box { left: 18.5%; right: 17.5%; top: 23%; height: 50%; }
@@ -319,9 +322,9 @@
       <!-- ١: الآية الكريمة -->
       <section class="slide" style="--img:url('assets/wreath.jpg')">
         <div class="box verse-box">
-          <p class="basmala scribe">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
-          <p class="ayah scribe">﴿&nbsp;وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ&nbsp;﴾</p>
-          <p class="sadaqa scribe">صَدَقَ اللَّهُ الْعَظِيمُ</p>
+          <p class="basmala scribe">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ</p>
+          <p class="ayah scribe">﴿&nbsp;وَمِنۡ ءَايَٰتِهِۦٓ أَنۡ خَلَقَ لَكُم مِّنۡ أَنفُسِكُمۡ أَزۡوَٰجٗا لِّتَسۡكُنُوٓاْ إِلَيۡهَا وَجَعَلَ بَيۡنَكُم مَّوَدَّةٗ وَرَحۡمَةًۚ إِنَّ فِي ذَٰلِكَ لَأٓيَٰتٖ لِّقَوۡمٖ يَتَفَكَّرُونَ&nbsp;﴾</p>
+          <p class="sadaqa scribe">صَدَقَ ٱللَّهُ ٱلۡعَظِيمُ</p>
         </div>
       </section>
 
@@ -409,7 +412,7 @@
       /* ميعاد الفرح: الخميس ٣١ ديسمبر ٢٠٢٦ الساعة ٧:٠٠ مساءً بتوقيت مصر (= ١٧:٠٠ بالتوقيت العالمي) */
       var WEDDING = Date.UTC(2026, 11, 31, 17, 0, 0);
       /* كل صفحة بتفضل قد إيه قبل ما تقلب لوحدها (بالثواني). آخر صفحة بتفضل ثابتة */
-      var STAY = [9, 12];
+      var STAY = [14, 12];
 
       var app = document.getElementById('app');
       var slides = [].slice.call(document.querySelectorAll('.slide'));
